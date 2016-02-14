@@ -1,0 +1,24 @@
+{
+  "name": "website-mtgdeckbuilder",
+  "description": "Magic the gathering deckbuilder site",
+  "main": "index.js",
+  "authors": [
+    "Gabriel D. Celery <gabriel.d.celery@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/GabrielDCelery/website-mtgdeckbuilder",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.0"
+  }
+}

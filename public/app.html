@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='myApp'>
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
+	<base href="/">
 </head>
-<body>
-	<div class="container">
-		<h1>Mtg deckbuilder app</h1>
-	</div>
+<body ng-controller="AuthCtrl">
+	<div ng-include="'views/_navbar.html'"></div><!-- MAIN NAVBAR -->
+	<div class="container" ng-view></div>
 
 	<script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -2,11 +2,11 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<div class="alert alert-success" ng-if="display.page.resetmail.success">
-			<strong>An email has been sent with the instructions to reset your password!</strong>
+			<strong>{{data.success.message}}</strong>
 		</div>
 
 		<div class="alert alert-danger" ng-if="display.page.resetmail.error">
-			<strong>There has been an error during your request!</strong>
+			<strong>{{data.error.message}}</strong>
 		</div>
 
 		<div class="panel panel-default" ng-if="display.page.resetmail.form">

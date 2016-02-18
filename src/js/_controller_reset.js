@@ -48,6 +48,12 @@ VARIABLES
 				newpassword: '',
 				confirmnewpassword: ''
 			}
+		},
+		success: {
+			message: ''
+		},
+		error: {
+			message: ''
 		}
 	}
 
@@ -89,12 +95,13 @@ FUNCTIONS - FORM - DATABASE
 	function getResetMail(input){
 		AuthFact.getResetMail(input, function (response){
 			if(response.data.success){
+				$scope.data.success.message = response.data.message;
 				DisplayFact.showSelectedElement($scope.display.page.resetmail, 'success');
+			} else {
+				$scope.data.error.message = response.data.message;
+				$scope.display.page.resetmail.error = true;
 			}
 
-			if(!response.data.success){
-				DisplayFact.showSelectedElement($scope.display.page.resetmail, 'error')
-			}
 		})
 	}
 
@@ -105,13 +112,12 @@ FUNCTIONS - FORM - DATABASE
 		if(canSendRegistration()){
 			AuthFact.resetPassword(input, function (response){
 				if(response.data.success){
+					$scope.data.success.message = response.data.message;
 					DisplayFact.showSelectedElement($scope.display.page.reset, 'success')
-				}
-
-				if(!response.data.success){
+				} else {
+					$scope.data.error.message = response.data.message;
 					DisplayFact.showSelectedElement($scope.display.page.reset, 'error')
 				}
-
 			})
 		}
 	}

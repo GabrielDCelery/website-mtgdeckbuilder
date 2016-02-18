@@ -2,7 +2,11 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<div class="alert alert-success" ng-if="display.page.reset.success">
-			<strong>Password changed successfully!</strong>
+			<strong>{{data.success.message}}</strong>
+		</div>
+
+		<div class="alert alert-danger" ng-if="display.page.reset.error">
+			<strong>{{data.error.message}}</strong>
 		</div>
 
 		<div class="panel panel-default" ng-if="display.page.reset.form">

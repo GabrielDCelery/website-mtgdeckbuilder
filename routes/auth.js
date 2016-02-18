@@ -94,21 +94,34 @@ authRoute.post('/resetmail', function (req, res){
 	var querystring = 'SELECT username, email FROM users WHERE email = ' + email;
 
 	connection.query(querystring, function (err, rows){
-		if (err) throw err;
+		if (err) {
+			res.json({
+				success: false,
+				message: 'There was an error while connecting to the database!'
+			})
+		} else if (rows.length == 1){
 
-		rows[0].timestamp = Date.parse(new Date());
-		var jsonString = JSON.stringify(rows[0]);
+			rows[0].timestamp = Date.parse(new Date());
+			var jsonString = JSON.stringify(rows[0]);
 
-		var cipher = crypto.createCipher('aes192', 'kuhpw894');
-		var encrypted = cipher.update(jsonString, 'utf8', 'hex');
-		encrypted += cipher.final('hex');
+			var cipher = crypto.createCipher('aes192', 'kuhpw894');
+			var encrypted = cipher.update(jsonString, 'utf8', 'hex');
+			encrypted += cipher.final('hex');
 
-		console.log(encrypted); // here goes the email handler sending the encrypted code in email
+			console.log(encrypted); // here goes the email handler sending the encrypted code in email
 
-		res.json({
-			success: true,
-			message: 'Encrypted user information sent via email!'
-		});
+			res.json({
+				success: true,
+				message: 'An email has been sent with the instructions to reset your password!'
+			});
+
+		} else {
+			res.json({
+				success: false,
+				message: 'The provided email address could not be found in the database!'
+			});
+		}
+
 
 	})
 
@@ -130,8 +143,12 @@ authRoute.post('/reset', function (req, res){
 		var querystring = 'UPDATE users SET password = ' + password + ' WHERE username = ' + username + ' AND email = ' + email;
 
 		connection.query(querystring, function (err, result) {
-			if (err) throw err;
-			if (result.affectedRows == 1){
+			if (err) {
+				res.json({
+					success: false,
+					message: 'There was an error while connecting to the database!'
+				})
+			} else if (result.affectedRows == 1){
 				res.json({
 					success: true,
 					message: 'Password changed!'

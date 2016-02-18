@@ -22,16 +22,23 @@ AuthFactory.factory('AuthFact', ['$http', function($http){
 		});	
 	}
 
+	function getResetMail(input, callback){
+		$http.post('/auth/resetmail', input).then(function (response){
+			callback(response);
+		});
+	}
+
 	function resetPassword(input, callback){
 		$http.post('/auth/reset', input).then(function (response){
 			callback(response);
-		});	
+		})
 	}
 
 	return {
 		getUsers: getUsers,
 		loginUser: loginUser,
 		registerUser: registerUser,
+		getResetMail: getResetMail,
 		resetPassword: resetPassword
 	}
 

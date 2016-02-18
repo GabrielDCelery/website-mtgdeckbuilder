@@ -6,6 +6,7 @@ var myApp = angular.module('myApp', [
 	'AuthFactory',
 	'LoginController',
 	'RegisterController',
+	'ResetController'
 	]);
 
 myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider){
@@ -22,11 +23,17 @@ myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $
 			templateUrl: 'views/auth/_register.html',
 			controller: 'RegisterCtrl'
 		})
-		.when('/reset', {
-			templateUrl: 'views/auth/_reset.html',
-			controller: 'LoginCtrl'
+		.when('/resetmail', {
+			templateUrl: 'views/auth/_resetmail.html',
+			controller: 'ResetCtrl'
 		})
-		.otherwise('/')
+		.when('/reset/:encrypteduserdata', {
+			templateUrl: 'views/auth/_reset.html',
+			controller: 'ResetCtrl'	
+		})
+		.otherwise({
+			redirectTo: '/'
+		})
 
 	$locationProvider.html5Mode(true);
 

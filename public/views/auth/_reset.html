@@ -1,15 +1,15 @@
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 
-		<div class="alert alert-success" ng-if="display.page.reset.success">
+		<div class="alert alert-success" ng-if="display.page.success">
 			<strong>{{data.success.message}}</strong>
 		</div>
 
-		<div class="alert alert-danger" ng-if="display.page.reset.error">
+		<div class="alert alert-danger" ng-if="display.page.error">
 			<strong>{{data.error.message}}</strong>
 		</div>
 
-		<div class="panel panel-default" ng-if="display.page.reset.form">
+		<div class="panel panel-default" ng-if="display.page.form">
 			<div class="panel-heading">
 				<h3 class="panel-title">Reset password</h3>
 			</div>
@@ -18,19 +18,19 @@
 
 					<div class="form-group">
 						<label for="password">NEW PASSWORD</label>
-						<input type="password" class="form-control" id="password" name="password" ng-model="data.form.reset.newpassword"/>
+						<input type="password" class="form-control" id="password" name="password" ng-model="data.form.newpassword"/>
 					</div>
 
 					<div class="alert alert-danger" ng-if="display.alert.passwordlength">Password has to be minimum 8 characters long!</div>
 
 					<div class="form-group">
 						<label for="repeatedpassword">REPEAT NEW PASSWORD</label>
-						<input type="password" class="form-control" id="repeatedpassword" name="repeatedpassword" ng-model="data.form.reset.confirmnewpassword"/>
+						<input type="password" class="form-control" id="repeatedpassword" name="repeatedpassword" ng-model="data.form.confirmnewpassword"/>
 					</div>
 
 					<div class="alert alert-danger" ng-if="display.alert.passwordsmatching">Passwords are not matching!</div>				
 
-					<button type="submit" class="btn btn-primary" ng-click="resetPassword(data.form.reset)">Reset password</button>
+					<button type="submit" class="btn btn-primary" ng-click="resetPassword(data.form)">Reset password</button>
 
 				</form>
 			</div>

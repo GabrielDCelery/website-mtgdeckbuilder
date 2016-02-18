@@ -6,12 +6,14 @@ ResetController.controller('ResetCtrl', [
 	'$routeParams', 
 	'DisplayFact', 
 	'AuthFact',
+	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		$routeParams, 
 		DisplayFact,
-		AuthFact
+		AuthFact,
+		FormValidation
 	){
 
 /*******************************************************************************
@@ -20,16 +22,9 @@ VARIABLES
 
 	$scope.display = {
 		page: {
-			resetmail: {
-				form: true,
-				success: false,
-				error: false
-			},
-			reset: {
-				form: true,
-				success: false,
-				error: false
-			}
+			form: true,
+			success: false,
+			error: false
 		},
 		alert: {
 			usernamedoesntexist: false,
@@ -41,13 +36,8 @@ VARIABLES
 
 	$scope.data = {
 		form: {
-			resetmail: {
-				email: ''
-			},
-			reset: {
-				newpassword: '',
-				confirmnewpassword: ''
-			}
+			newpassword: '',
+			confirmnewpassword: ''
 		},
 		success: {
 			message: ''
@@ -58,65 +48,23 @@ VARIABLES
 	}
 
 /*******************************************************************************
-FUNCTIONS - FORM - VALIDATION
-*******************************************************************************/
-
-	function checkPasswordLength(){
-		if($scope.data.form.reset.newpassword.length < 8){
-			$scope.display.alert.passwordlength = true;
-		} else {
-			$scope.display.alert.passwordlength = false;
-		}
-	}
-
-	function checkPasswordsMatching(){
-		if($scope.data.form.reset.newpassword != $scope.data.form.reset.confirmnewpassword){
-			$scope.display.alert.passwordsmatching = true;
-		} else {
-			$scope.display.alert.passwordsmatching = false;
-		}
-	}
-
-	function canSendRegistration(){
-		if(
-			$scope.display.alert.passwordlength == false &&
-			$scope.display.alert.passwordsmatching == false
-		){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-/*******************************************************************************
 FUNCTIONS - FORM - DATABASE
 *******************************************************************************/
 
-	function getResetMail(input){
-		AuthFact.getResetMail(input, function (response){
-			if(response.data.success){
-				$scope.data.success.message = response.data.message;
-				DisplayFact.showSelectedElement($scope.display.page.resetmail, 'success');
-			} else {
-				$scope.data.error.message = response.data.message;
-				$scope.display.page.resetmail.error = true;
-			}
-
-		})
-	}
-
 	function resetPassword(input){
 		input.encrypteduserdata = $routeParams.encrypteduserdata;
-		checkPasswordLength();
-		checkPasswordsMatching();
-		if(canSendRegistration()){
+
+		$scope.display.alert.passwordlength = FormValidation.isInputLongEnough($scope.data.form.newpassword, 8);
+		$scope.display.alert.passwordsmatching = FormValidation.areInputsMatching($scope.data.form.newpassword, $scope.data.form.confirmnewpassword);
+
+		if(FormValidation.canSendData($scope.display.alert)){
 			AuthFact.resetPassword(input, function (response){
 				if(response.data.success){
 					$scope.data.success.message = response.data.message;
-					DisplayFact.showSelectedElement($scope.display.page.reset, 'success')
+					DisplayFact.showSelectedElement($scope.display.page, 'success')
 				} else {
 					$scope.data.error.message = response.data.message;
-					DisplayFact.showSelectedElement($scope.display.page.reset, 'error')
+					DisplayFact.showSelectedElement($scope.display.page, 'error')
 				}
 			})
 		}
@@ -126,7 +74,6 @@ FUNCTIONS - FORM - DATABASE
 BINDING FUNCTIONS
 *******************************************************************************/
 
-	$scope.getResetMail = getResetMail;
 	$scope.resetPassword = resetPassword;
 
 }])

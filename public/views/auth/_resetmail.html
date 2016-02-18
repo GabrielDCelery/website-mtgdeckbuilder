@@ -1,15 +1,15 @@
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 
-		<div class="alert alert-success" ng-if="display.page.resetmail.success">
+		<div class="alert alert-success" ng-if="display.page.success">
 			<strong>{{data.success.message}}</strong>
 		</div>
 
-		<div class="alert alert-danger" ng-if="display.page.resetmail.error">
+		<div class="alert alert-danger" ng-if="display.page.error">
 			<strong>{{data.error.message}}</strong>
 		</div>
 
-		<div class="panel panel-default" ng-if="display.page.resetmail.form">
+		<div class="panel panel-default" ng-if="display.page.form">
 			<div class="panel-heading">
 				<h3 class="panel-title">Reset password</h3>
 			</div>
@@ -17,10 +17,10 @@
 				<form>
 					<div class="form-group">
 						<label for="email">EMAIL</label>
-						<input type="email" class="form-control" id="email" name="email" ng-model="data.form.resetmail.email"/>
+						<input type="email" class="form-control" id="email" name="email" ng-model="data.form.email"/>
 					</div>
 
-					<button type="submit" class="btn btn-primary" ng-click="getResetMail(data.form.resetmail)">Reset password</button>
+					<button type="submit" class="btn btn-primary" ng-click="getResetMail(data.form)">Reset password</button>
 					<a href="/login" class="btn btn-link">Login</a>
 					<a href="/register" class="btn btn-link">Register</a>
 				</form>

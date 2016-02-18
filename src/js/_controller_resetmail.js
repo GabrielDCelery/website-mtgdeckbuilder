@@ -1,14 +1,16 @@
-var LoginController = angular.module('LoginController', []);
+var ResetMailController = angular.module('ResetMailController', []);
 
-LoginController.controller('LoginCtrl', [
+ResetMailController.controller('ResetMailCtrl', [
 	'$scope', 
 	'$http', 
+	'$routeParams', 
 	'DisplayFact', 
 	'AuthFact',
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
+		$routeParams, 
 		DisplayFact,
 		AuthFact,
 		FormValidation
@@ -23,14 +25,18 @@ VARIABLES
 			form: true,
 			success: false,
 			error: false
+		},
+		alert: {
+			usernamedoesntexist: false,
+			passwordwrong: false,
+			passwordlength: false,
+			passwordsmatching: false
 		}
 	}
 
 	$scope.data = {
 		form: {
-			username: '',
-			password: '',
-			rememberme: false
+			email: ''
 		},
 		success: {
 			message: ''
@@ -44,9 +50,8 @@ VARIABLES
 FUNCTIONS - FORM - DATABASE
 *******************************************************************************/
 
-	function loginUser(input){
-		AuthFact.loginUser(input, function (response){
-
+	function getResetMail(input){
+		AuthFact.getResetMail(input, function (response){
 			if(response.data.success){
 				$scope.data.success.message = response.data.message;
 				DisplayFact.showSelectedElement($scope.display.page, 'success');
@@ -54,15 +59,13 @@ FUNCTIONS - FORM - DATABASE
 				$scope.data.error.message = response.data.message;
 				$scope.display.page.error = true;
 			}
-
 		})
 	}
-
 
 /*******************************************************************************
 BINDING FUNCTIONS
 *******************************************************************************/
 
-	$scope.loginUser = loginUser;
+	$scope.getResetMail = getResetMail;
 
 }])

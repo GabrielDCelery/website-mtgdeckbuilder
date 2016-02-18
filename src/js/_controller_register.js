@@ -4,12 +4,14 @@ RegisterController.controller('RegisterCtrl', [
 	'$scope', 
 	'$http', 
 	'DisplayFact', 
-	'AuthFact',
+	'AuthFact', 
+	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		DisplayFact,
-		AuthFact
+		AuthFact,
+		FormValidation
 	){
 
 /*******************************************************************************
@@ -48,28 +50,8 @@ VARIABLES
 	}
 
 /*******************************************************************************
-FUNCTIONS - FORM - REGISTER - VALIDATION
+FUNCTIONS - FORM - VALIDATION
 *******************************************************************************/
-
-	function isEmailValid(){
-
-		var pattern = new RegExp(/^\w+@[a-zA-Z_]+\.[a-zA-Z]{2,3}$/);
-
-		if(!pattern.test($scope.data.form.email)){
-			$scope.display.alert.emailvalid = true;
-		} else {
-			$scope.display.alert.emailvalid = false;
-		}
-
-	}
-
-	function checkUsernameLength(){
-		if($scope.data.form.username < 5){
-			$scope.display.alert.usernametooshort = true;
-		} else {
-			$scope.display.alert.usernametooshort = false;
-		}
-	}
 
 	function doesUserAlreadyExist(input, callback){
 		AuthFact.getUsers(input, function (response){
@@ -88,49 +70,19 @@ FUNCTIONS - FORM - REGISTER - VALIDATION
 
 	}
 
-	function checkPasswordLength(){
-		if($scope.data.form.password.length < 8){
-			$scope.display.alert.passwordlength = true;
-		} else {
-			$scope.display.alert.passwordlength = false;
-		}
-	}
-
-	function checkPasswordsMatching(){
-		if($scope.data.form.password != $scope.data.form.passwordconfirm){
-			$scope.display.alert.passwordsmatching = true;
-		} else {
-			$scope.display.alert.passwordsmatching = false;
-		}
-	}
-
-	function canSendRegistration(){
-		if(
-			$scope.display.alert.emailvalid == false &&
-			$scope.display.alert.emailtaken == false &&
-			$scope.display.alert.usernametaken == false &&
-			$scope.display.alert.usernametooshort == false &&
-			$scope.display.alert.passwordlength == false &&
-			$scope.display.alert.passwordsmatching == false
-		){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 /*******************************************************************************
 FUNCTIONS - FORM - DATABASE
 *******************************************************************************/
 
 	function registerUser(input){
 
-		checkUsernameLength();
-		isEmailValid();
-		checkPasswordLength();
-		checkPasswordsMatching();
+		$scope.display.alert.emailvalid = FormValidation.isEmailValid($scope.data.form.email);
+		$scope.display.alert.usernametooshort = FormValidation.isInputLongEnough($scope.data.form.username, 5);
+		$scope.display.alert.passwordlength = FormValidation.isInputLongEnough($scope.data.form.password, 8);
+		$scope.display.alert.passwordsmatching = FormValidation.areInputsMatching($scope.data.form.password, $scope.data.form.passwordconfirm);
+
 		doesUserAlreadyExist(input, function(){
-			if(canSendRegistration()){
+			if(FormValidation.canSendData($scope.display.alert)){
 				AuthFact.registerUser(input, function (response){
 					if(response.data.success){
 						$scope.data.success.message = response.data.message;

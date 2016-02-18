@@ -2,7 +2,11 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<div class="alert alert-success" ng-if="display.page.success">
-			<strong>Login successful!</strong>
+			<strong>{{data.success.message}}</strong>
+		</div>
+
+		<div class="alert alert-danger" ng-if="display.page.error">
+			<strong>{{data.error.message}}</strong>
 		</div>
 
 		<div class="panel panel-default" ng-if="display.page.form">
@@ -17,14 +21,10 @@
 						<input type="text" class="form-control" id="username" name="username" ng-model="data.form.username"/>
 					</div>	
 
-					<div class="alert alert-danger" ng-if="display.alert.usernamedoesntexist">User not found!</div>
-
 					<div class="form-group">
 						<label for="password">PASSWORD</label>
 						<input type="password" class="form-control" id="password" name="password" ng-model="data.form.password"/>
 					</div>
-
-					<div class="alert alert-danger" ng-if="display.alert.passwordwrong">Wrong password!</div>
 
 					<div class="checkbox">
 						<label>

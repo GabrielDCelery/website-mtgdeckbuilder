@@ -33,8 +33,12 @@ authRoute.post('/login', function (req, res){
 	var querystring = 'SELECT * FROM users WHERE username = ' + username;
 
 	connection.query(querystring, function (err, rows) {
-		if (err) throw err;
-		if (rows.length == 0){
+		if (err){
+			res.json({
+				success: false,
+				message: 'There was an error while connecting to the database!'
+			});
+		} else if (rows.length == 0){
 			res.json({
 				success: false, 
 				message: 'User not found!'

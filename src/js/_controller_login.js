@@ -19,11 +19,8 @@ VARIABLES
 	$scope.display = {
 		page: {
 			form: true,
-			success: false
-		},
-		alert: {
-			usernamedoesntexist: false,
-			passwordwrong: false
+			success: false,
+			error: false
 		}
 	}
 
@@ -32,6 +29,12 @@ VARIABLES
 			username: '',
 			password: '',
 			rememberme: false
+		},
+		success: {
+			message: ''
+		},
+		error: {
+			message: ''
 		}
 	}
 
@@ -42,23 +45,12 @@ FUNCTIONS - FORM - DATABASE
 	function loginUser(input){
 		AuthFact.loginUser(input, function (response){
 
-			$scope.display.alert.usernamedoesntexist = false;
-			$scope.display.alert.passwordwrong = false;
-
-			if(!response.data.success){
-
-				if(response.data.message == 'User not found!'){
-					$scope.display.alert.usernamedoesntexist = true;
-				}
-				if(response.data.message == 'Wrong password!'){
-					$scope.display.alert.passwordwrong = true;
-				}
-
-			} 
-
 			if(response.data.success){
-				$scope.display.page.form = false;
-				$scope.display.page.success = true;
+				$scope.data.success.message = response.data.message;
+				DisplayFact.showSelectedElement($scope.display.page, 'success');
+			} else {
+				$scope.data.error.message = response.data.message;
+				$scope.display.page.error = true;
 			}
 
 		})

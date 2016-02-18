@@ -3,12 +3,8 @@ var mysql = require('mysql');
 var md5 = require('md5');
 var crypto = require('crypto');
 
-var connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password : null,
-	database : 'mtgdeckbuilder'
-});
+var connection = globalRequire('config/db').connection;
+var secretPassword = globalRequire('config/db').secretPassword;
 
 var authRoute = express.Router();
 
@@ -104,7 +100,7 @@ authRoute.post('/resetmail', function (req, res){
 			rows[0].timestamp = Date.parse(new Date());
 			var jsonString = JSON.stringify(rows[0]);
 
-			var cipher = crypto.createCipher('aes192', 'kuhpw894');
+			var cipher = crypto.createCipher('aes192', secretPassword);
 			var encrypted = cipher.update(jsonString, 'utf8', 'hex');
 			encrypted += cipher.final('hex');
 
@@ -122,7 +118,6 @@ authRoute.post('/resetmail', function (req, res){
 			});
 		}
 
-
 	})
 
 })
@@ -130,7 +125,7 @@ authRoute.post('/resetmail', function (req, res){
 authRoute.post('/reset', function (req, res){
 
 	var encrypted = req.body.encrypteduserdata;
-	var decipher = crypto.createDecipher('aes192', 'kuhpw894');
+	var decipher = crypto.createDecipher('aes192', secretPassword);
 	var decrypted = decipher.update(encrypted, 'hex', 'utf8');
 	decrypted += decipher.final('utf8');
 	decrypted = JSON.parse(decrypted);

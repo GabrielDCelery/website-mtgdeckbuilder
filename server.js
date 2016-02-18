@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
+
+require('./global_require.js'); // globally require modules
 
 var authRoute = require('./routes/auth');
 

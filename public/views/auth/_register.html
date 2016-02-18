@@ -2,11 +2,11 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<div class="alert alert-success" ng-if="display.page.success">
-			<strong>Registration successful!</strong>
+			<strong>{{data.success.message}}</strong>
 		</div>
 
 		<div class="alert alert-danger" ng-if="display.page.error">
-			<strong>There was some kind of error, please try again later!</strong>
+			<strong>{{data.error.message}}</strong>
 		</div>
 
 		<div class="panel panel-default" ng-if="display.page.form">

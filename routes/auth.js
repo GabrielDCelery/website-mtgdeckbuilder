@@ -68,16 +68,20 @@ authRoute.post('/register', function (req, res){
 	var querystring = 'INSERT INTO users (username, password, email) VALUES (' + username + ', ' + password + ', ' + email + ')';
 	
 	connection.query(querystring, function (err, result) {
-		if (err) throw err;
-		if(result.affectedRows == 1){
+		if (err){
+			res.json({
+				success: false,
+				message: 'There was an error while connecting to the database!'
+			});	
+		} else if (result.affectedRows == 1){
 			res.json({
 				success: true,
-				message: 'User addedd successfully!'
+				message: 'Registration successful!'
 			});
 		} else {
 			res.json({
 				success: false,
-				message: 'Could not add new user!'
+				message: 'Registration unsuccessful!'
 			});
 		}
 	});

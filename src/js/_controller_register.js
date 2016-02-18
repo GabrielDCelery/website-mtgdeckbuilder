@@ -38,6 +38,12 @@ VARIABLES
 			username: '',
 			password: '',
 			passwordconfirm: ''
+		},
+		success: {
+			message:''
+		},
+		error: {
+			message: ''
 		}
 	}
 
@@ -127,9 +133,11 @@ FUNCTIONS - FORM - DATABASE
 			if(canSendRegistration()){
 				AuthFact.registerUser(input, function (response){
 					if(response.data.success){
+						$scope.data.success.message = response.data.message;
 						DisplayFact.showSelectedElement($scope.display.page, 'success');
 					} else {
-						DisplayFact.showSelectedElement($scope.display.page, 'error');
+						$scope.data.error.message = response.data.message;
+						$scope.display.page.error = true;
 					}
 				})
 			}			

@@ -15,10 +15,13 @@
 			</div>
 			<div class="panel-body">
 				<form>
-					<div class="form-group">
+
+					<div class="form-group" ng-class="{'has-error': display.alert.emailvalid}">
 						<label for="email">EMAIL</label>
-						<input type="email" class="form-control" id="email" name="email" ng-model="data.form.email"/>
+						<input type="mail" class="form-control" id="email" name="email" ng-model="data.form.email"/>
 					</div>
+
+					<div class="alert alert-danger" ng-if="display.alert.emailvalid">Email format is not valid!</div>
 
 					<button type="submit" class="btn btn-primary" ng-click="getResetMail(data.form)">Reset password</button>
 					<a href="/login" class="btn btn-link">Login</a>

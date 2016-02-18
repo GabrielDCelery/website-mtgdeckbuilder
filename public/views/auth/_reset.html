@@ -16,14 +16,14 @@
 			<div class="panel-body">
 				<form>
 
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error': display.alert.passwordlength}">
 						<label for="password">NEW PASSWORD</label>
 						<input type="password" class="form-control" id="password" name="password" ng-model="data.form.newpassword"/>
 					</div>
 
 					<div class="alert alert-danger" ng-if="display.alert.passwordlength">Password has to be minimum 8 characters long!</div>
 
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error': display.alert.passwordsmatching}">
 						<label for="repeatedpassword">REPEAT NEW PASSWORD</label>
 						<input type="password" class="form-control" id="repeatedpassword" name="repeatedpassword" ng-model="data.form.confirmnewpassword"/>
 					</div>

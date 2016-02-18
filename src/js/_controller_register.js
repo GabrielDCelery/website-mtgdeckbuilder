@@ -3,14 +3,14 @@ var RegisterController = angular.module('RegisterController', []);
 RegisterController.controller('RegisterCtrl', [
 	'$scope', 
 	'$http', 
-	'DisplayFact', 
-	'AuthFact', 
+	'Display', 
+	'Authentication', 
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
-		DisplayFact,
-		AuthFact,
+		Display,
+		Authentication,
 		FormValidation
 	){
 
@@ -28,7 +28,7 @@ VARIABLES
 			emailvalid: false,
 			emailtaken: false,
 			usernametaken: false,
-			usernametooshort: false,
+			usernamelength: false,
 			passwordlength: false,
 			passwordsmatching: false
 		}
@@ -54,7 +54,7 @@ FUNCTIONS - FORM - VALIDATION
 *******************************************************************************/
 
 	function doesUserAlreadyExist(input, callback){
-		AuthFact.getUsers(input, function (response){
+		Authentication.getUsers(input, function (response){
 			$scope.display.alert.usernametaken = false;
 			$scope.display.alert.emailtaken = false;
 			for(var i = 0; i < response.data.length; i++){
@@ -77,16 +77,16 @@ FUNCTIONS - FORM - DATABASE
 	function registerUser(input){
 
 		$scope.display.alert.emailvalid = FormValidation.isEmailValid($scope.data.form.email);
-		$scope.display.alert.usernametooshort = FormValidation.isInputLongEnough($scope.data.form.username, 5);
+		$scope.display.alert.usernamelength = FormValidation.isInputLongEnough($scope.data.form.username, 5);
 		$scope.display.alert.passwordlength = FormValidation.isInputLongEnough($scope.data.form.password, 8);
 		$scope.display.alert.passwordsmatching = FormValidation.areInputsMatching($scope.data.form.password, $scope.data.form.passwordconfirm);
 
 		doesUserAlreadyExist(input, function(){
 			if(FormValidation.canSendData($scope.display.alert)){
-				AuthFact.registerUser(input, function (response){
+				Authentication.registerUser(input, function (response){
 					if(response.data.success){
 						$scope.data.success.message = response.data.message;
-						DisplayFact.showSelectedElement($scope.display.page, 'success');
+						Display.showSelectedElement($scope.display.page, 'success');
 					} else {
 						$scope.data.error.message = response.data.message;
 						$scope.display.page.error = true;

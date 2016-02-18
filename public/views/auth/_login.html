@@ -16,15 +16,19 @@
 			<div class="panel-body">
 				<form>
 
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error': display.alert.usernamelength}">
 						<label for="username">USERNAME</label>
 						<input type="text" class="form-control" id="username" name="username" ng-model="data.form.username"/>
-					</div>	
+					</div>
 
-					<div class="form-group">
+					<div class="alert alert-danger" ng-if="display.alert.usernamelength">Username has to contain minimum 5 characters!</div>
+
+					<div class="form-group" ng-class="{'has-error': display.alert.passwordlength}">
 						<label for="password">PASSWORD</label>
 						<input type="password" class="form-control" id="password" name="password" ng-model="data.form.password"/>
 					</div>
+
+					<div class="alert alert-danger" ng-if="display.alert.passwordlength">Password has to be minimum 8 characters long!</div>
 
 					<div class="checkbox">
 						<label>
@@ -34,7 +38,7 @@
 
 					<button type="submit" class="btn btn-primary" ng-click="loginUser(data.form)">Login</button>
 					<a href="/register" class="btn btn-link">Register</a>
-					<a href="/resetmail" class="btn btn-link">Forgot password?</a>
+					<a href="/reset" class="btn btn-link">Forgot password?</a>
 
 				</form>
 			</div>

@@ -4,15 +4,15 @@ ResetMailController.controller('ResetMailCtrl', [
 	'$scope', 
 	'$http', 
 	'$routeParams', 
-	'DisplayFact', 
-	'AuthFact',
+	'Display', 
+	'Authentication',
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		$routeParams, 
-		DisplayFact,
-		AuthFact,
+		Display,
+		Authentication,
 		FormValidation
 	){
 
@@ -27,10 +27,7 @@ VARIABLES
 			error: false
 		},
 		alert: {
-			usernamedoesntexist: false,
-			passwordwrong: false,
-			passwordlength: false,
-			passwordsmatching: false
+			emailvalid: false
 		}
 	}
 
@@ -51,15 +48,20 @@ FUNCTIONS - FORM - DATABASE
 *******************************************************************************/
 
 	function getResetMail(input){
-		AuthFact.getResetMail(input, function (response){
-			if(response.data.success){
-				$scope.data.success.message = response.data.message;
-				DisplayFact.showSelectedElement($scope.display.page, 'success');
-			} else {
-				$scope.data.error.message = response.data.message;
-				$scope.display.page.error = true;
-			}
-		})
+
+		$scope.display.alert.emailvalid = FormValidation.isEmailValid($scope.data.form.email);
+
+		if(FormValidation.canSendData($scope.display.alert)){
+			Authentication.getResetMail(input, function (response){
+				if(response.data.success){
+					$scope.data.success.message = response.data.message;
+					Display.showSelectedElement($scope.display.page, 'success');
+				} else {
+					$scope.data.error.message = response.data.message;
+					$scope.display.page.error = true;
+				}
+			})
+		}
 	}
 
 /*******************************************************************************

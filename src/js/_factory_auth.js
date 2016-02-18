@@ -1,6 +1,6 @@
 var AuthFactory = angular.module('AuthFactory', []);
 
-AuthFactory.factory('AuthFact', ['$http', function($http){
+AuthFactory.factory('Authentication', ['$http', function($http){
 
 	var cachedUsernames;
 

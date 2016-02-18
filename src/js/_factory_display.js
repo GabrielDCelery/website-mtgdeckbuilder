@@ -1,6 +1,6 @@
 var DisplayFactory = angular.module('DisplayFactory', []);
 
-DisplayFactory.factory('DisplayFact', [function(){
+DisplayFactory.factory('Display', [function(){
 
 	function showSelectedElement(object, propertyName){
 		for(var key in object){

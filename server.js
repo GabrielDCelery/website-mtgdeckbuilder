@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-require('./global_require.js'); // globally require modules
+var globalRequire = require('./global_require.js'); // globally require modules (works everywhere)
 
 var authRoute = require('./routes/auth');
 

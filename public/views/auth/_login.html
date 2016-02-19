@@ -30,12 +30,6 @@
 
 					<div class="alert alert-danger" ng-if="display.alert.passwordlength">Password has to be minimum 8 characters long!</div>
 
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.form.rememberme"> Remember me
-						</label>
-					</div>
-
 					<button type="submit" class="btn btn-primary" ng-click="loginUser(data.form)">Login</button>
 					<a href="/register" class="btn btn-link">Register</a>
 					<a href="/reset" class="btn btn-link">Forgot password?</a>

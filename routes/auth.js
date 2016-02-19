@@ -2,6 +2,7 @@ var express = require('express');
 var mysql = require('mysql');
 var md5 = require('md5');
 var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
 
 var connection = globalRequire('config/db').connection;
 var secretPassword = globalRequire('config/db').secretPassword;
@@ -25,7 +26,6 @@ authRoute.post('/login', function (req, res){
 
 	var username = mysql.escape(req.body.username);
 	var password = md5(req.body.password);
-	var rememberme = req.body.rememberme;
 	var querystring = 'SELECT * FROM users WHERE username = ' + username;
 
 	connection.query(querystring, function (err, rows) {
@@ -45,9 +45,13 @@ authRoute.post('/login', function (req, res){
 				message: 'Wrong password!'
 			});
 		} else {
+
+			var token = jwt.sign(rows[0], secretPassword, {expiresIn: 86400});
+
 			res.json({
 				success: true,
-				message: 'Login successful!'
+				message: 'Login successful!',
+				token: token
 			});
 		}
 
@@ -162,6 +166,49 @@ authRoute.post('/reset', function (req, res){
 			message: 'Request expired!'
 		})
 	}
+
+})
+
+authRoute.post('/token', function (req, res){
+
+	jwt.verify(req.body.token, secretPassword, function (err, decoded){
+		if(err) {
+			res.json({
+				success: false, 
+				message: 'Failed to authenticate token!'
+			})
+		} else {
+			var username = mysql.escape(decoded.username);
+			var email = mysql.escape(decoded.email);
+			var password = decoded.password;
+			var querystring = 'SELECT username, password FROM users WHERE username = ' + username + ' AND email = ' + email;
+
+			connection.query(querystring, function (err, rows) {
+				if (err){
+					res.json({
+						success: false,
+						message: 'There was an error while connecting to the database!'
+					});
+				} else if (rows.length == 0){
+					res.json({
+						success: false, 
+						message: 'User not found!'
+					});
+				} else if (rows[0].password != password){
+					res.json({
+						success: false,
+						message: 'Wrong password!'
+					});
+				} else {
+					res.json({
+						success: true,
+						message: 'Login successful!',
+						username: rows[0].username
+					})
+				}
+			});
+		}
+	})
 
 })
 

@@ -34,12 +34,19 @@ AuthFactory.factory('Authentication', ['$http', function($http){
 		})
 	}
 
+	function loginWithToken(token, callback){
+		$http.post('/auth/token', {token: token}).then(function (response){
+			callback(response);
+		})
+	}
+
 	return {
 		getUsers: getUsers,
 		loginUser: loginUser,
 		registerUser: registerUser,
 		getResetMail: getResetMail,
-		resetPassword: resetPassword
+		resetPassword: resetPassword,
+		loginWithToken: loginWithToken
 	}
 
 }])

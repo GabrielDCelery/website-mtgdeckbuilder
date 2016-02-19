@@ -2,9 +2,11 @@ console.log("app is running...");
 
 var myApp = angular.module('myApp', [
 	'ngRoute',
-	'DisplayFactory',
-	'AuthFactory',
+	'ngStorage', 
+	'DisplayFactory', 
+	'AuthFactory', 
 	'FormValidationFactory', 
+	'AuthController', 
 	'LoginController',
 	'RegisterController',
 	'ResetController',
@@ -42,11 +44,5 @@ myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $
 }])
 
 myApp.controller('MainCtrl', ['$scope', function ($scope){
-
-}])
-
-
-
-myApp.controller('AuthCtrl', ['$scope', function ($scope){
 
 }])

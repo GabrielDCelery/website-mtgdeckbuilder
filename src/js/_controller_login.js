@@ -3,12 +3,14 @@ var LoginController = angular.module('LoginController', []);
 LoginController.controller('LoginCtrl', [
 	'$scope', 
 	'$http', 
+	'$localStorage', 
 	'Display', 
 	'Authentication',
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
+		$localStorage, 
 		Display,
 		Authentication,
 		FormValidation
@@ -56,8 +58,12 @@ FUNCTIONS - FORM - DATABASE
 		if(FormValidation.canSendData($scope.display.alert)){
 			Authentication.loginUser(input, function (response){
 
+				$scope.auth.username = $scope.data.form.username;
+				$localStorage.token = response.data.token;
+	
 				if(response.data.success){
 					$scope.data.success.message = response.data.message;
+					$scope.auth.loggedIn = true;
 					Display.showSelectedElement($scope.display.page, 'success');
 				} else {
 					$scope.data.error.message = response.data.message;

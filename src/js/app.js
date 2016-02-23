@@ -4,7 +4,7 @@ var myApp = angular.module('myApp', [
 	'ngRoute',
 	'ngStorage', 
 	'DisplayFactory', 
-	'AuthFactory', 
+	'UsersFactory', 
 	'FormValidationFactory', 
 	'AuthController', 
 	'LoginController',

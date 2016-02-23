@@ -4,13 +4,13 @@ RegisterController.controller('RegisterCtrl', [
 	'$scope', 
 	'$http', 
 	'Display', 
-	'Authentication', 
+	'Users', 
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		Display,
-		Authentication,
+		Users,
 		FormValidation
 	){
 
@@ -54,7 +54,7 @@ FUNCTIONS - FORM - VALIDATION
 *******************************************************************************/
 
 	function doesUserAlreadyExist(input, callback){
-		Authentication.getUsers(input, function (response){
+		Users.getUsers(input, function (response){
 			$scope.display.alert.usernametaken = false;
 			$scope.display.alert.emailtaken = false;
 			for(var i = 0; i < response.data.length; i++){
@@ -83,7 +83,7 @@ FUNCTIONS - FORM - DATABASE
 
 		doesUserAlreadyExist(input, function(){
 			if(FormValidation.canSendData($scope.display.alert)){
-				Authentication.registerUser(input, function (response){
+				Users.registerUser(input, function (response){
 					if(response.data.success){
 						$scope.data.success.message = response.data.message;
 						Display.showSelectedElement($scope.display.page, 'success');

@@ -4,12 +4,12 @@ AuthController.controller('AuthCtrl', [
 	'$scope', 
 	'$location', 
 	'$localStorage', 
-	'Authentication', 
+	'Users', 
 	function (
 		$scope, 
 		$location, 
 		$localStorage, 
-		Authentication
+		Users
 	){
 
 /*******************************************************************************
@@ -27,7 +27,7 @@ FUNCTIONS
 
 	function loginWithToken(token){
 		if(token){
-			Authentication.loginWithToken(token, function (response){
+			Users.loginWithToken(token, function (response){
 				if(response.data.success){
 					$scope.auth.loggedIn = true;
 					$scope.auth.username = response.data.username;

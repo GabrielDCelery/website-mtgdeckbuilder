@@ -5,14 +5,14 @@ ResetMailController.controller('ResetMailCtrl', [
 	'$http', 
 	'$routeParams', 
 	'Display', 
-	'Authentication',
+	'Users',
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		$routeParams, 
 		Display,
-		Authentication,
+		Users,
 		FormValidation
 	){
 
@@ -52,7 +52,7 @@ FUNCTIONS - FORM - DATABASE
 		$scope.display.alert.emailvalid = FormValidation.isEmailValid($scope.data.form.email);
 
 		if(FormValidation.canSendData($scope.display.alert)){
-			Authentication.getResetMail(input, function (response){
+			Users.getResetMail(input, function (response){
 				if(response.data.success){
 					$scope.data.success.message = response.data.message;
 					Display.showSelectedElement($scope.display.page, 'success');

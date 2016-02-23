@@ -4,8 +4,8 @@ UsersFactory.factory('Users', ['$http', function($http){
 
 	var cachedUsernames;
 
-	function getUsers(input, callback){
-		$http.post('/auth/users', input).then(function (response){
+	function doesUserExist(input, callback){
+		$http.post('/auth/doesuserexist', input).then(function (response){
 			callback(response);
 		})
 	}
@@ -41,7 +41,7 @@ UsersFactory.factory('Users', ['$http', function($http){
 	}
 
 	return {
-		getUsers: getUsers,
+		doesUserExist: doesUserExist,
 		loginUser: loginUser,
 		registerUser: registerUser,
 		getResetMail: getResetMail,

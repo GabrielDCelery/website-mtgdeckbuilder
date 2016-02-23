@@ -21,7 +21,6 @@
 					</div>
 
 					<div class="alert alert-danger" ng-if="display.alert.emailvalid">Email format is not valid!</div>
-					<div class="alert alert-danger" ng-if="display.alert.emailtaken">Email is already in the database!</div>
 
 					<div class="form-group" ng-class="{'has-error': display.alert.usernamelength}">
 						<label for="username">USERNAME</label>
@@ -29,7 +28,6 @@
 					</div>
 
 					<div class="alert alert-danger" ng-if="display.alert.usernamelength">Username has to contain minimum 5 characters!</div>
-					<div class="alert alert-danger" ng-if="display.alert.usernametaken">Username already taken!</div>
 
 					<div class="form-group" ng-class="{'has-error': display.alert.passwordlength}">
 						<label for="password">PASSWORD</label>

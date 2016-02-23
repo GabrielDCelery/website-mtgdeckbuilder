@@ -26,8 +26,6 @@ VARIABLES
 		},
 		alert: {
 			emailvalid: false,
-			emailtaken: false,
-			usernametaken: false,
 			usernamelength: false,
 			passwordlength: false,
 			passwordsmatching: false
@@ -54,18 +52,16 @@ FUNCTIONS - FORM - VALIDATION
 *******************************************************************************/
 
 	function doesUserAlreadyExist(input, callback){
-		Users.getUsers(input, function (response){
-			$scope.display.alert.usernametaken = false;
-			$scope.display.alert.emailtaken = false;
-			for(var i = 0; i < response.data.length; i++){
-				if(response.data[i].username == $scope.data.form.username){
-					$scope.display.alert.usernametaken = true;
-				}
-				if(response.data[i].email == $scope.data.form.email){
-					$scope.display.alert.emailtaken = true;
-				}
+		Users.doesUserExist(input, function (response){
+
+			if(response.data.success){
+				$scope.display.page.error = false;
+				callback();
+			} else {
+				$scope.display.page.error = true;
+				$scope.data.error.message = response.data.message;
 			}
-			callback();
+
 		})
 
 	}

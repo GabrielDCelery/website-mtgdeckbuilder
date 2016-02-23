@@ -9,17 +9,42 @@ var secretPassword = globalRequire('config/db').secretPassword;
 
 var auth = {
 
-	users: function (req, res){
+	doesUserExist: function (req, res){
 
 		var username = mysql.escape(req.body.username);
 		var email = mysql.escape(req.body.email);
 		var querystring = 'SELECT username, email FROM users WHERE username = ' + username + ' OR email = ' + email;
 
 		connection.query(querystring, function(err, rows){
+			if (err){
+				res.json({
+					success: false,
+					message: 'There was an error while connecting to the database!'
+				});
+			} else if (rows.length > 0){
+				for(var i = 0; i < rows.length; i++){
+					if(rows[i].username == req.body.username){
+						res.json({
+							success: false,
+							message: 'Username already exists!'
+						});
+						break;
+					}
 
-			console.log(rows)
-			if (err) throw err;
-			res.json(rows);
+					if(rows[i].email == req.body.email){
+						res.json({
+							success: false,
+							message: 'Email already exists!'
+						});
+						break;
+					}
+				}
+			} else {
+				res.json({
+					success: true,
+					message: 'Username and email are free!'
+				});	
+			}
 		})
 
 	},
@@ -87,7 +112,7 @@ var auth = {
 		});
 	},
 
-	resetmail: function (req, res){
+	resetMail: function (req, res){
 
 		var email = mysql.escape(req.body.email);
 		var querystring = 'SELECT username, email FROM users WHERE email = ' + email;

@@ -2,11 +2,13 @@ var AuthController = angular.module('AuthController', []);
 
 AuthController.controller('AuthCtrl', [
 	'$scope', 
+	'$http', 
 	'$location', 
 	'$localStorage', 
 	'Login', 
 	function (
 		$scope, 
+		$http, 
 		$location, 
 		$localStorage, 
 		Login
@@ -25,14 +27,10 @@ VARIABLES
 FUNCTIONS
 *******************************************************************************/	
 
-	function loginWithToken(token){
-		if(token){
-			Login.loginWithToken(token, function (response){
-				if(response.data.success){
-					$scope.auth.loggedIn = true;
-					$scope.auth.username = response.data.username;
-				}
-			})
+	function logIn(){
+		if($localStorage.token){
+			$scope.auth.loggedIn = true;
+			$scope.auth.username = $localStorage.username;
 		}
 	}
 
@@ -40,6 +38,7 @@ FUNCTIONS
 		$scope.auth.loggedIn = false;
 		$scope.auth.username = '';
 		delete $localStorage.token;
+		delete $localStorage.username;
 		$location.path("/");
 	}
 
@@ -53,6 +52,6 @@ BINDING FUNCTIONS
 INITITATING FUNCTIONS UPON LOADING
 *******************************************************************************/
 
-	loginWithToken($localStorage.token);
+	logIn();
 
 }])

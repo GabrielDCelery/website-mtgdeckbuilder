@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var globalRequire = require('./global_require.js'); // globally require modules (works everywhere)
 
 var routes = require('./routes');
+var token = require('./middlewares/token');
 
 var app = express();
 
@@ -12,6 +13,16 @@ app.use(require('connect-livereload')());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.all('*', function (req, res, next){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+	res.header("Access-Control-Allow-Credentials", true);
+	next();
+})
+
+app.all('/test', token.verify);
 
 app.use('/', routes);
 

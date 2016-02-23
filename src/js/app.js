@@ -6,6 +6,7 @@ var myApp = angular.module('myApp', [
 	'DisplayFactory', 
 	'LoginFactory', 
 	'FormValidationFactory', 
+	'TokenFactory', 
 	'AuthController', 
 	'LoginController',
 	'RegisterController',
@@ -13,7 +14,7 @@ var myApp = angular.module('myApp', [
 	'ResetMailController'
 	]);
 
-myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider){
+myApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider){
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/_main.html',
@@ -40,6 +41,8 @@ myApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $
 		})
 
 	$locationProvider.html5Mode(true);
+
+	$httpProvider.interceptors.push('TokenInterceptor');
 
 }])
 

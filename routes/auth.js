@@ -189,50 +189,7 @@ var auth = {
 			})
 		}
 
-	},
-
-	token: function (req, res){
-
-		jwt.verify(req.body.token, secretPassword, function (err, decoded){
-			if(err) {
-				res.json({
-					success: false, 
-					message: 'Failed to authenticate token!'
-				})
-			} else {
-				var username = mysql.escape(decoded.username);
-				var email = mysql.escape(decoded.email);
-				var password = decoded.password;
-				var querystring = 'SELECT username, password FROM users WHERE username = ' + username + ' AND email = ' + email;
-
-				connection.query(querystring, function (err, rows) {
-					if (err){
-						res.json({
-							success: false,
-							message: 'There was an error while connecting to the database!'
-						});
-					} else if (rows.length == 0){
-						res.json({
-							success: false, 
-							message: 'User not found!'
-						});
-					} else if (rows[0].password != password){
-						res.json({
-							success: false,
-							message: 'Wrong password!'
-						});
-					} else {
-						res.json({
-							success: true,
-							message: 'Login successful!',
-							username: rows[0].username
-						})
-					}
-				});
-			}
-		})
 	}
-
 
 }
 

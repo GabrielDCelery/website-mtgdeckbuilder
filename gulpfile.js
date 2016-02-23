@@ -25,7 +25,7 @@ gulp.task('server', function(){
 	gulp.watch(['server.js'], server.notify);
 	gulp.watch(['public/**/*.html'], server.notify);
 	gulp.watch(['public/js/*.js'], server.notify);
-	gulp.watch(['server.js', 'routes/**/*.js'], [server.run]);
+	gulp.watch(['server.js', 'routes/**/*.js', 'config/**/*.js', 'middlewares/**/*.js'], [server.run]);
 })
 
 /*************************************************************************

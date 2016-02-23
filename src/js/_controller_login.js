@@ -59,7 +59,9 @@ FUNCTIONS - FORM - DATABASE
 			Login.loginUser(input, function (response){
 
 				$scope.auth.username = $scope.data.form.username;
+				
 				$localStorage.token = response.data.token;
+				$localStorage.username = $scope.data.form.username;
 	
 				if(response.data.success){
 					$scope.data.success.message = response.data.message;

@@ -4,13 +4,13 @@ RegisterController.controller('RegisterCtrl', [
 	'$scope', 
 	'$http', 
 	'Display', 
-	'Users', 
+	'Login', 
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		Display,
-		Users,
+		Login,
 		FormValidation
 	){
 
@@ -52,7 +52,7 @@ FUNCTIONS - FORM - VALIDATION
 *******************************************************************************/
 
 	function doesUserAlreadyExist(input, callback){
-		Users.doesUserExist(input, function (response){
+		Login.doesUserExist(input, function (response){
 
 			if(response.data.success){
 				$scope.display.page.error = false;
@@ -79,7 +79,7 @@ FUNCTIONS - FORM - DATABASE
 
 		doesUserAlreadyExist(input, function(){
 			if(FormValidation.canSendData($scope.display.alert)){
-				Users.registerUser(input, function (response){
+				Login.registerUser(input, function (response){
 					if(response.data.success){
 						$scope.data.success.message = response.data.message;
 						Display.showSelectedElement($scope.display.page, 'success');

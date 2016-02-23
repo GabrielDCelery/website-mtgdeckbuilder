@@ -5,14 +5,14 @@ ResetController.controller('ResetCtrl', [
 	'$http', 
 	'$routeParams', 
 	'Display', 
-	'Users',
+	'Login',
 	'FormValidation', 
 	function (
 		$scope, 
 		$http, 
 		$routeParams, 
 		Display,
-		Users,
+		Login,
 		FormValidation
 	){
 
@@ -58,7 +58,7 @@ FUNCTIONS - FORM - DATABASE
 		$scope.display.alert.passwordsmatching = FormValidation.areInputsMatching($scope.data.form.newpassword, $scope.data.form.confirmnewpassword);
 
 		if(FormValidation.canSendData($scope.display.alert)){
-			Users.resetPassword(input, function (response){
+			Login.resetPassword(input, function (response){
 				if(response.data.success){
 					$scope.data.success.message = response.data.message;
 					Display.showSelectedElement($scope.display.page, 'success')
